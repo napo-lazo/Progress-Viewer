@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#Progress_Viewer data files
+Progress_Viewer_Data/
