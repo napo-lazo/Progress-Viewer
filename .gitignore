@@ -130,3 +130,6 @@ dmypy.json
 
 #Progress_Viewer data files
 Progress_Viewer_Data/
+
+#Dependency code
+Dependencies/
