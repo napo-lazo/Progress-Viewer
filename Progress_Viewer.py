@@ -1,12 +1,13 @@
-from Entry_Manager import Entry_Manager
+from Main_Manager import Main_Manager
 from Dependencies.Menu_Plotter.Menu_Plotter import Menu_Plotter
 
 def GenerateMenuStructure() -> Menu_Plotter:
     menu = Menu_Plotter()
-    entryManager = Entry_Manager()
+    mainManager = Main_Manager()
 
-    menu.AddActionNode("Initial Check", ["Main Screen"], entryManager.InitialCheck)
-    menu.AddMenuNode("Main Screen", ["exit"], ["Exit"])
+    menu.AddActionNode("Initial Check", ["Main Screen"], mainManager.InitialCheck)
+    menu.AddActionNode("Create New Progress Entry", ["Main Screen"], mainManager.CreateNewProgressEntry)
+    menu.AddMenuNode("Main Screen", ["Create New Progress Entry", "exit"], ["Create New Progress Entry", "Exit"])
     menu.SetStartNode("Initial Check")
 
     return menu
