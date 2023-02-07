@@ -10,14 +10,20 @@ class Main_Manager():
         self._fileManager = File_Manager()
         self._entryCreator = Entry_Creator()
 
-    def InitialCheck(self):
+    def InitialCheck(self) -> None:
         self._fileManager.CheckForFolder()
         self._entriesDictionary = self._fileManager.LoadProgressEntries()
 
-    def CreateNewProgressEntry(self):
+    def CreateNewProgressEntry(self) -> None:
         self._entryCreator.CreateNewProgressEntry(self._entriesDictionary)
         self._fileManager.SaveProgressEntries(self._entriesDictionary)
 
-    def DeleteProgressEntry(self):
+    def DeleteProgressEntry(self) -> None:
         self._entryCreator.DeleteProgressEntry(self._entriesDictionary)
         self._fileManager.SaveProgressEntries(self._entriesDictionary)
+
+    def SetActiveProgressEntry(self) -> None:
+        self._entryCreator.SetActiveProgressEntry()
+
+    def DisplayCurrenylyActiveProgressEntry(self) -> str:
+        return self._entryCreator.DisplayActiveProgressEntry()
