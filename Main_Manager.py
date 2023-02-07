@@ -17,3 +17,7 @@ class Main_Manager():
     def CreateNewProgressEntry(self):
         self._entryCreator.CreateNewProgressEntry(self._entriesDictionary)
         self._fileManager.SaveProgressEntries(self._entriesDictionary)
+
+    def DeleteProgressEntry(self):
+        self._entryCreator.DeleteProgressEntry(self._entriesDictionary)
+        self._fileManager.SaveProgressEntries(self._entriesDictionary)

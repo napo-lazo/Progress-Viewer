@@ -11,7 +11,7 @@ class File_Manager():
     def LoadProgressEntries(self) -> dict:
         '''Checks if there the file holding our progress entries exists and loads it into a dictionary, else it creates a new file and dictionary'''
         if (not os.path.exists("./Progress_Viewer_Data/Progress_Entries.json")):
-            baseJsonDictionary = {"Entries": []}
+            baseJsonDictionary = {}
             self.SaveProgressEntries(baseJsonDictionary)
 
             return baseJsonDictionary
