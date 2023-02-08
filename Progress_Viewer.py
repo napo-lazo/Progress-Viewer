@@ -12,7 +12,8 @@ def GenerateMenuStructure() -> Menu_Plotter:
 
     menu.AddMenuNode("Main Screen", 
                      ["Create New Progress Entry", "Set Active Progress Entry", "Delete Progress Entry", "exit"], 
-                     ["Create New Progress Entry", "Set Active Progress Entry", "Delete Progress Entry", "Exit"])
+                     ["Create New Progress Entry", "Set Active Progress Entry", "Delete Progress Entry", "Exit"],
+                     header=mainManager.DisplayCurrenylyActiveProgressEntry)
     
     menu.SetStartNode("Initial Check")
 
