@@ -10,7 +10,7 @@ class Entry_Creator():
         entryCumulative = input("Is the new entry cumulative?\n")
         entryTimeFrame = input("What's the timeframe of the new progress entry?\n")
 
-        progressEntries[entryName] = {"Format": entryFormat, "Cumulative": entryCumulative, "TimeFrame": entryTimeFrame}
+        progressEntries[entryName] = {"Format": entryFormat, "Cumulative": entryCumulative, "TimeFrame": entryTimeFrame, "Records": []}
 
     def DeleteProgressEntry(self, progressEntries: dict) -> None:
         '''Deletes the desired progress entry'''
@@ -25,3 +25,22 @@ class Entry_Creator():
         '''Returns an string with the currently active progress entry'''
         if (self._currentSelectedEntry is not None):
             return f"The currently active progress entry is: {self._currentSelectedEntry}"
+    
+    def AddNewRecord(self, progressEntries: dict) -> None:
+        '''Adds a new record to the record collection of the currently active progress entry'''
+        anotherRecord = True
+        userAnswer = None
+
+        while(anotherRecord):
+            newRecord = input("What's the value of the new record?\n")
+            progressEntries[self._currentSelectedEntry]["Records"].append(newRecord)
+            
+            invalidAnswer = True
+            while (invalidAnswer):
+                userAnswer = input("Do you want to add another record? (y/n)\n")
+                invalidAnswer = userAnswer.lower() != "n" and userAnswer.lower() != "y"
+                if (invalidAnswer):
+                    print("Error: Only 'y' or 'n' are valid answers")
+            
+            if (userAnswer.lower() != "y"):
+                anotherRecord = False

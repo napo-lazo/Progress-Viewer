@@ -27,3 +27,7 @@ class Main_Manager():
 
     def DisplayCurrenylyActiveProgressEntry(self) -> str:
         return self._entryCreator.DisplayActiveProgressEntry()
+    
+    def AddNewRecord(self):
+        self._entryCreator.AddNewRecord(self._entriesDictionary)
+        self._fileManager.SaveProgressEntries(self._entriesDictionary)
