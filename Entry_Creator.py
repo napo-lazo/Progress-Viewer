@@ -1,10 +1,10 @@
 from Constants import *
+from UtilityFunctions import ValidateUserInput
 
 class Entry_Creator():
     
     _currentSelectedEntry: str = None
 
-    #TODO: Add input validation
     def CreateNewProgressEntry(self, progressEntries: dict) -> None:
         '''Prompts the user to provide the info needed to create a new progress entry'''        
         entryName = input("What's the name of the new progress entry?\n")
@@ -13,9 +13,10 @@ class Entry_Creator():
             print("Error: A progress entry with that name already exists")
             return
 
-        entryFormat = input("What's the format of the new progress entry?\n")
-        entryCumulative = input("Is the new entry cumulative?\n")
-        entryTimeFrame = input("What's the timeframe of the new progress entry?\n")
+        entryFormat = ValidateUserInput("What's the format of the new progress entry? (decimal/currency)\n", ["decimal", "currency"])
+        entryCumulative = ValidateUserInput("Is the new entry cumulative? (yes/no)\n", ["yes", "no"])
+        entryTimeFrame = ValidateUserInput("What's the timeframe of the new progress entry? (daily/weekly/bi-weekly/monthly/yearly)\n", 
+                                                 ["daily", "weekly", "bi-weekly", "monthly", "yearly"])
 
         progressEntries[entryName] = {FORMAT_KEY: entryFormat, CUMULATIVE_KEY: entryCumulative, TIME_FRAME_KEY: entryTimeFrame, RECORDS_KEY: []}
 
@@ -53,12 +54,7 @@ class Entry_Creator():
             newRecord = input("What's the value of the new record?\n")
             progressEntries[entryName][RECORDS_KEY].append(newRecord)
             
-            invalidAnswer = True
-            while (invalidAnswer):
-                userAnswer = input("Do you want to add another record? (y/n)\n")
-                invalidAnswer = userAnswer.lower() != "n" and userAnswer.lower() != "y"
-                if (invalidAnswer):
-                    print("Error: Only 'y' or 'n' are valid answers")
+            userAnswer = ValidateUserInput("Do you want to add another record? (y/n)\n", ["y", "n"])
             
-            if (userAnswer.lower() != "y"):
+            if (userAnswer.lower() == "n"):
                 anotherRecord = False
