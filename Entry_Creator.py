@@ -8,6 +8,11 @@ class Entry_Creator():
     def CreateNewProgressEntry(self, progressEntries: dict) -> None:
         '''Prompts the user to provide the info needed to create a new progress entry'''        
         entryName = input("What's the name of the new progress entry?\n")
+
+        if (entryName in progressEntries):
+            print("Error: A progress entry with that name already exists")
+            return
+
         entryFormat = input("What's the format of the new progress entry?\n")
         entryCumulative = input("Is the new entry cumulative?\n")
         entryTimeFrame = input("What's the timeframe of the new progress entry?\n")
@@ -17,6 +22,11 @@ class Entry_Creator():
     def DeleteProgressEntry(self, progressEntries: dict) -> None:
         '''Deletes the desired progress entry'''
         entryName = input("What's the name of the progress entry you wish to delete?\n")
+        
+        if (entryName not in progressEntries):
+            print("Error: The typed progress entry doesn't exist")
+            return
+        
         progressEntries.pop(entryName)
 
     def SetActiveProgressEntry(self) -> None:
@@ -34,6 +44,10 @@ class Entry_Creator():
         userAnswer = None
 
         entryName = input("What's the name of the progress entry you wish to add a record to?\n")
+
+        if (entryName not in progressEntries):
+            print("Error: The typed progress entry doesn't exist")
+            return
 
         while(anotherRecord):
             newRecord = input("What's the value of the new record?\n")
