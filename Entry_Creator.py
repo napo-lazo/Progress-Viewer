@@ -31,9 +31,11 @@ class Entry_Creator():
         anotherRecord = True
         userAnswer = None
 
+        entryName = input("What's the name of the progress entry you wish to add a record to?\n")
+
         while(anotherRecord):
             newRecord = input("What's the value of the new record?\n")
-            progressEntries[self._currentSelectedEntry]["Records"].append(newRecord)
+            progressEntries[entryName]["Records"].append(newRecord)
             
             invalidAnswer = True
             while (invalidAnswer):
