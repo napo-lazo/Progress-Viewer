@@ -1,3 +1,5 @@
+from Constants import *
+
 class Entry_Creator():
     
     _currentSelectedEntry: str = None
@@ -10,7 +12,7 @@ class Entry_Creator():
         entryCumulative = input("Is the new entry cumulative?\n")
         entryTimeFrame = input("What's the timeframe of the new progress entry?\n")
 
-        progressEntries[entryName] = {"Format": entryFormat, "Cumulative": entryCumulative, "TimeFrame": entryTimeFrame, "Records": []}
+        progressEntries[entryName] = {FORMAT_KEY: entryFormat, CUMULATIVE_KEY: entryCumulative, TIME_FRAME_KEY: entryTimeFrame, RECORDS_KEY: []}
 
     def DeleteProgressEntry(self, progressEntries: dict) -> None:
         '''Deletes the desired progress entry'''
@@ -35,7 +37,7 @@ class Entry_Creator():
 
         while(anotherRecord):
             newRecord = input("What's the value of the new record?\n")
-            progressEntries[entryName]["Records"].append(newRecord)
+            progressEntries[entryName][RECORDS_KEY].append(newRecord)
             
             invalidAnswer = True
             while (invalidAnswer):
