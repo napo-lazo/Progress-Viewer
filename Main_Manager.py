@@ -1,26 +1,18 @@
-from File_Manager import File_Manager
 from Entry_Creator import Entry_Creator
+from File_Manager import CheckForFolder
 
 class Main_Manager():
-    _fileManager: File_Manager
     _entryCreator: Entry_Creator
-    _entriesDictionary: dict
-
-    def __init__(self) -> None:
-        self._fileManager = File_Manager()
-        self._entryCreator = Entry_Creator()
 
     def InitialCheck(self) -> None:
-        self._fileManager.CheckForFolder()
-        self._entriesDictionary = self._fileManager.LoadProgressEntries()
+        CheckForFolder()
+        self._entryCreator = Entry_Creator()
 
     def CreateNewProgressEntry(self) -> None:
-        self._entryCreator.CreateNewProgressEntry(self._entriesDictionary)
-        self._fileManager.SaveProgressEntries(self._entriesDictionary)
+        self._entryCreator.CreateNewProgressEntry()
 
     def DeleteProgressEntry(self) -> None:
-        self._entryCreator.DeleteProgressEntry(self._entriesDictionary)
-        self._fileManager.SaveProgressEntries(self._entriesDictionary)
+        self._entryCreator.DeleteProgressEntry()
 
     def SetActiveProgressEntry(self) -> None:
         self._entryCreator.SetActiveProgressEntry()
@@ -29,5 +21,4 @@ class Main_Manager():
         return self._entryCreator.DisplayActiveProgressEntry()
     
     def AddNewRecord(self):
-        self._entryCreator.AddNewRecord(self._entriesDictionary)
-        self._fileManager.SaveProgressEntries(self._entriesDictionary)
+        self._entryCreator.AddNewRecord()
