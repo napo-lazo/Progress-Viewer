@@ -1,9 +1,29 @@
 from Constants import *
 from UtilityFunctions import ValidateUserInput
+from datetime import datetime, timedelta
 
 class Entry_Creator():
     
     _currentSelectedEntry: str = None
+
+    def _CalculateNextTimeFrameDate(self, timeFrame: str) -> str:
+        currentDate = datetime.now()
+        days = 0
+
+        if (timeFrame == "daily"):
+            days = 1
+        elif (timeFrame == "weekly"):
+            days = 7
+        elif (timeFrame == "bi-weekly"):
+            days = 14
+        elif (timeFrame == "monthly"):
+            days = 30
+        elif (timeFrame == "yearly"):
+            days = 365
+
+        currentDate += timedelta(days=days)
+
+        return currentDate.strftime("%d/%b/%Y")
 
     def CreateNewProgressEntry(self, progressEntries: dict) -> None:
         '''Prompts the user to provide the info needed to create a new progress entry'''        
@@ -18,7 +38,13 @@ class Entry_Creator():
         entryTimeFrame = ValidateUserInput("What's the timeframe of the new progress entry? (daily/weekly/bi-weekly/monthly/yearly)\n", 
                                                  ["daily", "weekly", "bi-weekly", "monthly", "yearly"])
 
-        progressEntries[entryName] = {FORMAT_KEY: entryFormat, CUMULATIVE_KEY: entryCumulative, TIME_FRAME_KEY: entryTimeFrame, RECORDS_KEY: []}
+
+
+        progressEntries[entryName] = {FORMAT_KEY: entryFormat, 
+                                      CUMULATIVE_KEY: entryCumulative, 
+                                      TIME_FRAME_KEY: entryTimeFrame, 
+                                      NEXT_TIME_FRAME_DATE_KEY: self._CalculateNextTimeFrameDate(entryTimeFrame), 
+                                      RECORDS_KEY: []}
 
     def DeleteProgressEntry(self, progressEntries: dict) -> None:
         '''Deletes the desired progress entry'''

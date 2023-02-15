@@ -1,4 +1,4 @@
-def ValidateUserInput(self, message: str, validAnswers: list):
+def ValidateUserInput(message: str, validAnswers: list):
         
         validAnswersString = ", ".join(validAnswers)
 
