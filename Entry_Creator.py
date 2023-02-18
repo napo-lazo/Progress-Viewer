@@ -66,8 +66,14 @@ class Entry_Creator():
 
         while(anotherRecord):
             newRecord = input("What's the value of the new record?\n")
-            self._progressEntries[entryName][RECORDS_KEY].append(newRecord)
-            
+        
+            try:
+                newRecordAsNumber = float(newRecord)
+                self._progressEntries[entryName][RECORDS_KEY].append(newRecordAsNumber)
+            except ValueError:
+                print("ERROR: The new record is not a number")
+                continue
+
             userAnswer = ValidateUserInput("Do you want to add another record? (y/n)\n", ["y", "n"])
             
             if (userAnswer.lower() == "n"):
