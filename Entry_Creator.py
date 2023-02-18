@@ -2,33 +2,15 @@ from Constants import *
 from UtilityFunctions import ValidateUserInput
 from datetime import datetime, timedelta
 from File_Manager import *
+from Save_Data_Manager import *
 
 class Entry_Creator():
-    
     _progressEntries: dict
     _currentSelectedEntry: str = None
 
     def __init__(self):
-        self._progressEntries = LoadProgressEntries()
-
-    def _CalculateNextTimeFrameDate(self, timeFrame: str) -> str:
-        currentDate = datetime.now()
-        days = 0
-
-        if (timeFrame == "daily"):
-            days = 1
-        elif (timeFrame == "weekly"):
-            days = 7
-        elif (timeFrame == "bi-weekly"):
-            days = 14
-        elif (timeFrame == "monthly"):
-            days = 30
-        elif (timeFrame == "yearly"):
-            days = 365
-
-        currentDate += timedelta(days=days)
-
-        return currentDate.strftime("%d/%b/%Y")
+        self._progressEntries = LoadDictFromFile(PROGRESS_ENTRIES_FILE)
+        CheckForExpiredEntries(self._progressEntries)
 
     def CreateNewProgressEntry(self) -> None:
         '''Prompts the user to provide the info needed to create a new progress entry'''        
@@ -42,16 +24,14 @@ class Entry_Creator():
         entryCumulative = ValidateUserInput("Is the new entry cumulative? (yes/no)\n", ["yes", "no"])
         entryTimeFrame = ValidateUserInput("What's the timeframe of the new progress entry? (daily/weekly/bi-weekly/monthly/yearly)\n", 
                                                  ["daily", "weekly", "bi-weekly", "monthly", "yearly"])
-
-
-
+        
         self._progressEntries[entryName] = {FORMAT_KEY: entryFormat, 
                                       CUMULATIVE_KEY: entryCumulative, 
                                       TIME_FRAME_KEY: entryTimeFrame, 
-                                      NEXT_TIME_FRAME_DATE_KEY: self._CalculateNextTimeFrameDate(entryTimeFrame), 
+                                      LAST_UPDATE_DATE: datetime.now().strftime(DATE_TIME_FORMAT), 
                                       RECORDS_KEY: []}
         
-        SaveProgressEntries(self._progressEntries)
+        SaveDictToFile(self._progressEntries, PROGRESS_ENTRIES_FILE)
 
     def DeleteProgressEntry(self) -> None:
         '''Deletes the desired progress entry'''
@@ -62,7 +42,7 @@ class Entry_Creator():
             return
         
         self._progressEntries.pop(entryName)
-        SaveProgressEntries(self._progressEntries)
+        SaveDictToFile(self._progressEntries, PROGRESS_ENTRIES_FILE)
 
     def SetActiveProgressEntry(self) -> None:
         '''Sets the currently active progress entry'''
@@ -93,5 +73,5 @@ class Entry_Creator():
             if (userAnswer.lower() == "n"):
                 anotherRecord = False
 
-        SaveProgressEntries(self._progressEntries)
+        SaveDictToFile(self._progressEntries, PROGRESS_ENTRIES_FILE)
 
