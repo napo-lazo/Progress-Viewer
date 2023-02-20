@@ -9,10 +9,11 @@ def GenerateMenuStructure() -> Menu_Plotter:
     menu.AddActionNode("Create New Progress Entry", ["Main Screen"], mainManager.CreateNewProgressEntry)
     menu.AddActionNode("Add New Record", ["Main Screen"], mainManager.AddNewRecord)
     menu.AddActionNode("Delete Progress Entry", ["Main Screen"], mainManager.DeleteProgressEntry)
+    menu.AddActionNode("Display Records", ["Main Screen"], mainManager.DisplayRecordsList)
 
     menu.AddMenuNode("Main Screen", 
-                     ["Create New Progress Entry", "Add New Record", "Delete Progress Entry", "exit"], 
-                     ["Create New Progress Entry", "Add New Record", "Delete Progress Entry", "Exit"])
+                     ["Create New Progress Entry", "Add New Record", "Delete Progress Entry", "Display Records", "exit"], 
+                     ["Create New Progress Entry", "Add New Record", "Delete Progress Entry", "Display Records", "Exit"])
     
     menu.SetStartNode("Initial Check")
 

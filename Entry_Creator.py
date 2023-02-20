@@ -12,11 +12,29 @@ class Entry_Creator():
         self._progressEntries = LoadDictFromFile(PROGRESS_ENTRIES_FILE)
         CheckForExpiredEntries(self._progressEntries)
 
+    def CheckIfEntryExists(self, entryName: str) -> bool:
+        '''Checks if an entry with that name exists in the entry dictionary'''
+        if (entryName in self._progressEntries):
+            return True
+        
+        return False
+
+    def GetEntryName(self) -> str:
+        '''Trys to get an entry name from the entries dictionary, if it can't find it a None value will be returned'''
+        entryName = input("What's the name of the progress entry?\n")
+
+        if (self.CheckIfEntryExists(entryName)):
+            return entryName
+        else:
+            print("Error: The typed progress entry doesn't exist")
+            return None
+
+
     def CreateNewProgressEntry(self) -> None:
         '''Prompts the user to provide the info needed to create a new progress entry'''        
         entryName = input("What's the name of the new progress entry?\n")
 
-        if (entryName in self._progressEntries):
+        if (self.CheckIfEntryExists(entryName)):
             print("Error: A progress entry with that name already exists")
             return
 
@@ -35,10 +53,9 @@ class Entry_Creator():
 
     def DeleteProgressEntry(self) -> None:
         '''Deletes the desired progress entry'''
-        entryName = input("What's the name of the progress entry you wish to delete?\n")
+        entryName = self.GetEntryName()
         
-        if (entryName not in self._progressEntries):
-            print("Error: The typed progress entry doesn't exist")
+        if (entryName is None):
             return
         
         self._progressEntries.pop(entryName)
@@ -58,10 +75,9 @@ class Entry_Creator():
         anotherRecord = True
         userAnswer = None
 
-        entryName = input("What's the name of the progress entry you wish to add a record to?\n")
+        entryName = self.GetEntryName()
 
-        if (entryName not in self._progressEntries):
-            print("Error: The typed progress entry doesn't exist")
+        if (entryName is None):
             return
 
         while(anotherRecord):

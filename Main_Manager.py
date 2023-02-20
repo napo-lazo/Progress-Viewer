@@ -1,5 +1,7 @@
 from Entry_Creator import Entry_Creator
 from File_Manager import CheckForFolder
+from Display_Handler import *
+from Save_Data_Manager import GetEntryRecordList
 
 class Main_Manager():
     _entryCreator: Entry_Creator
@@ -22,3 +24,9 @@ class Main_Manager():
     
     def AddNewRecord(self):
         self._entryCreator.AddNewRecord()
+
+    def DisplayRecordsList(self):
+        entryName = self._entryCreator.GetEntryName()
+        
+        if (entryName is not None):
+            DisplayRecordsList(entryName, GetEntryRecordList(entryName))

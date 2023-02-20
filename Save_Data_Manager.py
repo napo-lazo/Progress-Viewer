@@ -22,7 +22,8 @@ def HasTimeFrameElapsed(entryDate: datetime, timeFrame: str) -> bool:
         return currentDate >= entryDate
 
 def ParseSaveFileName(entryName: str) -> str:
-    return SAVE_DATA_FILE.replace("{entryName}", entryName.replace(" ", "_"))
+    saveFileName = SAVE_DATA_FILE.replace("{entryName}", entryName.replace(" ", "_"))
+    return f"{SAVE_DATA_FOLDER}/{saveFileName}"
 
 def CheckForExpiredEntries(progressEntries: dict) -> None:
     changesMade = False
@@ -49,6 +50,9 @@ def CheckForExpiredEntries(progressEntries: dict) -> None:
     if (changesMade):
         SaveDictToFile(progressEntries, PROGRESS_ENTRIES_FILE)
 
+def GetEntryRecordList(entryName: str) -> list:
+    saveData = LoadDictFromFile(ParseSaveFileName(entryName))
+    return saveData[RECORD_LIST]
             
 
         

@@ -1,4 +1,5 @@
-def ValidateUserInput(message: str, validAnswers: list):
+def ValidateUserInput(message: str, validAnswers: list) -> str:
+    '''Validates that the user input fits with any of the elements of the validAnswers list'''
     validAnswersString = ", ".join(validAnswers)
 
     while (True):
