@@ -15,3 +15,4 @@ SAVE_DATA_FILE = "Save_Data_{entryName}.json"
 #Save Data
 RECORD_LIST = "RecordsList"
 START_DATE = "StartDate"
+CUMULATIVE_TOTAL = "CumulativeTotal"

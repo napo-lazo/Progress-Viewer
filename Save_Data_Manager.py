@@ -64,7 +64,19 @@ def CheckForExpiredEntries(progressEntries: dict) -> None:
             recentRecords = entry[RECORDS_KEY].copy()
             entry[RECORDS_KEY] = []
             entry[LAST_UPDATE_DATE] = CalculateNextStartPeriod(entryDate, entryTimeFrame)
-            saveData[RECORD_LIST].append({START_DATE: entryDate.strftime(DATE_TIME_FORMAT), RECORDS_KEY: recentRecords})
+
+            if (entry[CUMULATIVE_KEY] == "yes"):
+                if (len(saveData[RECORD_LIST]) != 0):
+                    total = saveData[RECORD_LIST][-1][CUMULATIVE_TOTAL]
+                else:
+                    total = 0
+
+                for record in recentRecords:
+                    total += record
+
+                saveData[RECORD_LIST].append({START_DATE: entryDate.strftime(DATE_TIME_FORMAT), RECORDS_KEY: recentRecords, CUMULATIVE_TOTAL: total})
+            else:
+                saveData[RECORD_LIST].append({START_DATE: entryDate.strftime(DATE_TIME_FORMAT), RECORDS_KEY: recentRecords})
 
             SaveDictToFile(saveData, ParseSaveFileName(entryName))
     
