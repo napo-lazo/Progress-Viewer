@@ -6,7 +6,7 @@ from Save_Data_Manager import *
 
 class Entry_Creator():
     _progressEntries: dict
-    _currentSelectedEntry: str = None
+    currentSelectedEntry: str = None
 
     def __init__(self):
         self._progressEntries = LoadDictFromFile(PROGRESS_ENTRIES_FILE)
@@ -18,6 +18,10 @@ class Entry_Creator():
             return True
         
         return False
+
+    def isCumulative(self, entryName: str) -> bool:
+        '''Checks if the entry is cumulative'''
+        return self._progressEntries[entryName][CUMULATIVE_KEY] == 'yes'
 
     def GetEntryName(self) -> str:
         '''Trys to get an entry name from the entries dictionary, if it can't find it a None value will be returned'''
@@ -63,12 +67,7 @@ class Entry_Creator():
 
     def SetActiveProgressEntry(self) -> None:
         '''Sets the currently active progress entry'''
-        self._currentSelectedEntry = input("What's the name of the progress entry you wish to set as active?\n")
-
-    def DisplayActiveProgressEntry(self) -> str:
-        '''Returns an string with the currently active progress entry'''
-        if (self._currentSelectedEntry is not None):
-            return f"The currently active progress entry is: {self._currentSelectedEntry}"
+        self.currentSelectedEntry = self.GetEntryName()
     
     def AddNewRecord(self) -> None:
         '''Adds a new record to the record collection of the currently active progress entry'''

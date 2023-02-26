@@ -18,15 +18,26 @@ class Main_Manager():
 
     def SetActiveProgressEntry(self) -> None:
         self._entryCreator.SetActiveProgressEntry()
-
-    def DisplayCurrenylyActiveProgressEntry(self) -> str:
-        return self._entryCreator.DisplayActiveProgressEntry()
     
-    def AddNewRecord(self):
+    def AddNewRecord(self) -> None:
         self._entryCreator.AddNewRecord()
 
-    def DisplayRecordsList(self):
-        entryName = self._entryCreator.GetEntryName()
+    def CheckIfCumulative(self) -> int:
+        if (self._entryCreator.currentSelectedEntry is None):
+            return 2
+        
+        return self._entryCreator.isCumulative(self._entryCreator.currentSelectedEntry)
+
+    def DisplayRecordsList(self) -> None:
+        entryName = self._entryCreator.currentSelectedEntry
+        self._entryCreator.currentSelectedEntry = None
+
+        if (entryName is not None):
+            DisplayRecordsList(entryName, GetEntryRecordList(entryName), asCumulative=False)
+    
+    def DisplayRecordsListCumulative(self) -> None:
+        entryName = self._entryCreator.currentSelectedEntry
+        self._entryCreator.currentSelectedEntry = None
         
         if (entryName is not None):
-            DisplayRecordsList(entryName, GetEntryRecordList(entryName))
+            DisplayRecordsList(entryName, GetEntryRecordList(entryName), asCumulative=True)

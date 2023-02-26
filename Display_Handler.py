@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from Constants import *
 
-def DisplayRecordsList(entryName: str, recordsList: list) -> None:
+def DisplayRecordsList(entryName: str, recordsList: list, asCumulative: bool) -> None:
     recordTotals = []
     dateLabels = []
     max = 0
@@ -9,8 +9,11 @@ def DisplayRecordsList(entryName: str, recordsList: list) -> None:
     for record in recordsList:
         total = 0
 
-        for value in record[RECORDS_KEY]:
-            total += value
+        if (asCumulative):
+            total = record[CUMULATIVE_TOTAL]
+        else:
+            for value in record[RECORDS_KEY]:
+                total += value
         
         if (total > max):
             max = total
@@ -25,8 +28,16 @@ def DisplayRecordsList(entryName: str, recordsList: list) -> None:
     ax.set_title(entryName)
     ax.set_xlabel("Dates")
 
-    rects = ax.bar(xTicks, recordTotals, 0.25)
-    ax.bar_label(rects, padding=3)
+    if (asCumulative):
+        ax.plot(xTicks, recordTotals, 2, marker='o')
+        counter = 0
+        for record in recordTotals:
+            ax.annotate(record, (xTicks[counter], record), textcoords='offset points', xytext=(-10, 10), ha='center')
+            counter += 1
+    else:
+        rects = ax.bar(xTicks, recordTotals, 0.25)
+        ax.bar_label(rects, padding=3)
+    
     ax.set_xticks(xTicks)
     ax.set_xticklabels(dateLabels)
     ax.set_xlim(0,xTicks[-1] + 1)
