@@ -1,5 +1,5 @@
 from Constants import *
-from UtilityFunctions import ValidateUserInput
+from UtilityFunctions import ValidateUserInput, DisplayOptions
 from datetime import datetime, timedelta
 from File_Manager import *
 from Save_Data_Manager import *
@@ -25,6 +25,8 @@ class Entry_Creator():
 
     def GetEntryName(self) -> str:
         '''Trys to get an entry name from the entries dictionary, if it can't find it a None value will be returned'''
+        DisplayOptions(list(self._progressEntries.keys()))
+        
         entryName = input("What's the name of the progress entry?\n")
 
         if (self.CheckIfEntryExists(entryName)):
